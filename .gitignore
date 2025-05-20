@@ -1,0 +1,16 @@
+venv
+.vscode
+setup.cfg
+unitary_old/
+sla_created/
+pdf_created/
+png_created/
+__pycache__/
+imposition_old/
+essais/
+data
+examples/*/imposition
+fixed_marks.pdf
+my_imposition/
+todo.txt
+hotfolder/

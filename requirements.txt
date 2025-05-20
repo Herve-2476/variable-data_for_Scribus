@@ -1,0 +1,12 @@
+openpyxl==3.1.5
+pytest==7.2.1
+flake8==6.0.0
+pdfrw==0.4
+Pillow==9.4.0
+reportlab==3.6.12
+qrcode==7.3.1
+pikepdf==8.4.1
+requests==2.32.3
+redis==5.0.8
+#pypdfium2==4.24.0 #python -m pip install -U pypdfium2
+fonttools==4.55.0

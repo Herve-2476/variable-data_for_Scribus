@@ -1,0 +1,11 @@
+delete_sla = True
+create_pdf = True
+create_png = False
+first_number = 1
+number_of_sla_instances = 1
+number_of_export_instances = 1
+number_of_files = 1
+sla_in_dir = ""
+sla_created_dir = ""
+pdf_created_dir = ""
+png_created_dir = ""
