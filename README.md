@@ -1,4 +1,4 @@
-The aim of this project is to create Pdf files or variable images. The programming language is Python, and the professional-quality files (with spot color and overprint management) are generated using Scribus. Once the files have been generated, we'll use the online VariableData application (https://variable-data.graphics) to generate a Pdf file ready for printing.
+The aim of this project is to create variable Pdf files or variable images. The programming language is Python, and the professional-quality files (with spot color and overprint management) are generated using Scribus. Once the files have been generated, we'll use the online VariableData application (https://variable-data.graphics) to generate a Pdf file ready for printing.
 
 Tested with win11 and ubuntu 22.04.1 LTS
 
@@ -162,7 +162,7 @@ sla.place("Document-5_stars") # places the object stars of the file Document-5.s
 
 In this example the object `stars` and the object `earth` are groups of objects. The first one is placed without change. With the second and with a for loop we can change the attributes of the objects that are in the group without knowing the name of each object.
 
-Note : The objects in the group object `earth` are not filled with one color but with gradient, that's why we use the tag `CSTOP` and the attribute `NAME` to modify it. (see how the sla file is constructed)
+Note : The objects in the group object `earth` are not filled with one color but with gradient, that's why we use the tag `CSTOP` and the attribute `NAME` to modify it. (see how the sla file is built)
 
 # Creation of a project
 
@@ -186,6 +186,7 @@ The command above will create all directories and files needed for the project (
 
 You can change these directories by settings the variables `sla_in_dir`, `sla_created_dir`, `pdf_created_dir`, `png_created_dir` in the `app_settings.py` file.
 After running the previous command you will raise the exception `Exception: There is no sla files to treat in the directory path_of_the_project\sla_in` because there is no sla file in the directory `sla_in`. Open Scribus, create a sla file, put it in the directory `sla_in`, fill the `generator.py` file and run the project.
+
 Note : It's sometimes interesting during the development of your project to set `delete_sla` to False in order to edit the sla files generated to understand a bug.
 
 # Running a project
@@ -290,11 +291,27 @@ Add a Pdf object with the button `Add object`.
 Click on the `no variable`field and select `number:01` and enter `.pdf` in the field just after.
 
 Check that your entry is correct with the following image.
-![screenshot](/examples/hello_world_2/image.jpg)
+
+![screenshot](/examples/hello_world_2/screenshot_1.jpg)
+
 If ok, click on the button `Create`.
+
+The new display must be the following :
+
+![screenshot](/examples/hello_world_2/screenshot_2.jpg)
 
 The application generates the pdf file and displays the first page.
 If you like, you can download the 4-page pdf file by clicking on the button `PDF/CSV n°1/1`.
 
-When you quit the application or click on the reset button, all files downloaded and created on the server are deleted.
+With 18 unit files and the following new settings :
+
+![screenshot](/examples/hello_world_2/screenshot_3.jpg)
+
+And here are the two pages of the generated file.
+
+![screenshot](/examples/hello_world_2/page_1.jpg)
+
+![screenshot](/examples/hello_world_2/page_2.jpg)
+
+When you quit the application or click on the `reset` button, all files downloaded and created on the server are deleted.
 If you just want to put variable text on a Pdf file or an image, the VariableData application can do this directly (using an Excel or Csv data file) and more quickly than creating unit files, but for more complex data such as color gradients, Scribus is a must.
