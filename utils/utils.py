@@ -83,7 +83,7 @@ def display_pipe(nom_pipe, pipe):
         ch += nom_pipe + "\n\n"
         for msg in pipe.splitlines():
             if msg:
-                ch += f"{constants.TAB}" + f"{msg.decode("utf-8")}" + "\n"
+                ch += f"{constants.TAB}" + f"{msg.decode('utf-8')}" + "\n"
     if ch != "":
         print(ch)
     return ch
