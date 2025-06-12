@@ -257,7 +257,7 @@ Syntax : `object_SLA.get(element,attribute,default_value)`
 - attribute : it's an attribute of the tag `PAGEOBJECT`
 - default_value : value returned if the attribute is not found (0 by default)
 
-# Part Two : GENERATION OF A PDF FILE WITH ALL UNIT FILES (IMPOSED FILE)
+# Part Two : GENERATION OF A PDF FILE WITH ALL UNIT FILES
 
 # Running hello_world_2
 
