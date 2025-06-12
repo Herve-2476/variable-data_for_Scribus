@@ -283,7 +283,7 @@ Add a reference in the `REFERENCES` area with the `+` button.
 
 In the `quantity` field, enter `16`.
 
-Drag and drop the 16 Pdf files from the directory `./examples/hello_world_2/pdf_created` in the `Upload object files` area.
+Drag and drop the 16 Pdf files from the directory `./examples/hello_world_2/pdf_created` in the `Upload object files` area. After that the counter is `16/500`.
 
 Add a Pdf object with the button `Add object`.
 
