@@ -290,7 +290,7 @@ Add a Pdf object with the button `Add object`.
 Click on the `no variable`field and select `number:01` and enter `.pdf` in the field just after.
 
 Check that your entry is correct with the following image.
-![screenshot](/examples/hello_world_2/image.png)
+![screenshot](/examples/hello_world_2/image.jpg)
 If ok, click on the button `Create`.
 
 The application generates the pdf file and displays the first page.
