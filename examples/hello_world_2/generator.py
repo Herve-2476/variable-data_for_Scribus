@@ -33,8 +33,8 @@ for file_number in range(
     # //////////////\\\\\\\\\\\\\
     # put here the objects you want on your files with their variable attributes
     sla.place("Document-1_sky")
-    sla.place(f"Document-{file_number%6+1}_text")
-    sla.place(f"Document-{file_number%6+1}_stars")
+    sla.place(f"Document-{file_number % 6+1}_text")
+    sla.place(f"Document-{file_number % 6+1}_stars")
     # sla.place("Document-1_number", ITEXT=[{"CH": f"N° {file_number:04}"}])
     random.shuffle(colors)
     i = 0

@@ -300,13 +300,13 @@ class SLA:
             self.empty_root = root
 
     def display_sla_colors(self):
-        msg = "\nColors find in your sla file (the one selected for"
-        msg += " the construction of all the sla files)\n"
+        msg = "Colors found in your sla file (the one selected for"
+        msg += " the construction of all the sla files)"
         print(msg)
         colors_list = []
         for color in self.empty_root.findall("./DOCUMENT/COLOR"):
             colors_list.append(color.attrib["NAME"])
-        print(colors_list)
+        print("\t" + str(colors_list))
 
     def get(self, object, attribute, default=0):
         object_name = self.return_name_object(object)
@@ -317,8 +317,7 @@ class SLA:
             return default
 
     def display_named_sla_objects(self):
-        print("\nObjects find in your(s) sla files\n")
+        print("Objects found in your(s) sla files")
         for name_object in self.objects:
             if cts.WITHOUTNAME_NAME not in name_object:
-                print(" - " + name_object)
-        print()
+                print("\t" + name_object)

@@ -2,27 +2,12 @@ import os
 import types
 import shutil
 import importlib.util
-from pdfrw import PdfReader
-from pdfrw.buildxobj import pagexobj
-import time
-import sys
 
 # from PIL import Image as ImagePIL
 # from reportlab.pdfgen.canvas import Canvas
 
 
 from utils import constants
-
-
-def write_pid(dir):
-    pid = str(os.getpid())
-    with open(os.path.join(dir, pid), "w") as f:
-        f.write("")
-    return pid
-
-
-def delete_pid(dir, pid):
-    os.remove(os.path.join(dir, pid))
 
 
 def select_scribus_exe():
@@ -82,31 +67,6 @@ def test_and_copy(
         return False
 
 
-def test_copy_file_without_attribute(
-    source_directory_name,
-    source_file_name,
-    target_directory_name,
-    target_file_name,
-    attribute_to_delete,
-):
-    if not os.path.isfile(os.path.join(target_directory_name, target_file_name)):
-        with open(
-            os.path.join(source_directory_name, source_file_name),
-            "r",
-        ) as file:
-            lines = file.readlines()
-        for i, line in enumerate(lines):
-            if line.startswith(attribute_to_delete):
-                break
-        lines.pop(i)
-        with open(os.path.join(target_directory_name, target_file_name), "w") as file:
-            file.writelines(lines)
-        print(f"{constants.TAB}Creation of the file {target_file_name}")
-
-    else:
-        print(f"{constants.TAB}{target_file_name} already exist")
-
-
 def module_from_file(module):
     module_directory, module_name = module
     spec = importlib.util.spec_from_file_location(
@@ -123,15 +83,10 @@ def display_pipe(nom_pipe, pipe):
         ch += nom_pipe + "\n\n"
         for msg in pipe.splitlines():
             if msg:
-                ch += f"{constants.TAB}" + f"{msg}"[2:-1] + "\n"
+                ch += f"{constants.TAB}" + f"{msg.decode("utf-8")}" + "\n"
     if ch != "":
         print(ch)
     return ch
-
-
-def clean_directory(dir):
-    for file in os.listdir(dir):
-        os.remove(os.path.join(dir, file))
 
 
 def create_dir(working_directory, directory_name, directory):
@@ -177,59 +132,6 @@ def compute_per_slice(number_of_files, slice):
     files_quantity_per_slice = [slice] * q + [r] * (r != 0)
 
     return files_quantity_per_slice
-
-
-def retrieve_data(directory, file_name, save=False):
-    """read the file and create a dictionnary with the name of
-    the object for the key and lines of code for the value.
-    Save is requested to save the file without the variable objects"""
-    with open(os.path.join(directory, file_name), "r", encoding="utf-8") as file:
-        lines = file.readlines()
-    new_lines = []
-    objects_dict = {}
-    i = 0
-    while i < len(lines):
-        if lines[i].startswith("__"):
-            name_obj = lines[i].split("=")[0].rstrip()[2:]
-            objects_dict[name_obj] = [lines[i][2:]]
-            i += 1
-            while i < len(lines) and not lines[i].startswith("__"):
-                objects_dict[name_obj].append(lines[i])
-                i += 1
-        else:
-            new_lines.append(lines[i] + "\n")
-            i += 1
-    if save:
-        with open(f"./temp/{file_name}", "w", encoding="utf-8") as file:
-            file.writelines(new_lines)
-    return objects_dict
-
-
-def retrieve_file_dimensions(file_for_dimensions):
-    pdf = PdfReader(file_for_dimensions)
-    page = pagexobj(pdf.pages[0])
-
-    file_width, file_height = (page.BBox[2] - page.BBox[0]) / constants.R, (
-        page.BBox[3] - page.BBox[1]
-    ) / constants.R
-
-    return file_width, file_height
-
-
-def retrieve_image_dimensions(path, resolution):
-    im = ImagePIL.open(path)
-    w, h = im.size  # en pixels (pas ceux d'un pdf=72/inch)
-    return w / resolution * 25.4, h / resolution * 25.4
-
-
-def image_to_pdf(path, new_path, resolution):
-    im = ImagePIL.open(path)
-    w, h = im.size  # en pixels (pas ceux d'un pdf=72/inch)
-    w, h = w / resolution * 72, h / resolution * 72
-    can = Canvas(new_path)
-    can.setPageSize((w, h))
-    can.drawInlineImage(im, 0, 0, w, h)
-    can.save()
 
 
 def save_settings(data_settings, target_directory, target_file_name):
@@ -291,11 +193,6 @@ def working_directory_test():
         raise Exception(msg)
 
 
-def retrieve_working_directory(file):
-    with open(file, "r") as f:
-        return f.read().split("=")[-1]
-
-
 class Settings:
     def __init__(self, modules_list):
         for module in [module_from_file(module) for module in modules_list]:
@@ -304,34 +201,3 @@ class Settings:
                     module.__dict__[key], types.ModuleType
                 ):
                     self.__dict__[key] = module.__dict__[key]
-
-
-DIRS = [
-    "VariableDataPrinting",
-    "Variable_Data_Printing_server",
-    "Variable_Data_Printing_Front_End",
-    "Variable_Data_Printing_API_Rest",
-]
-
-
-def update_packages():
-    try:
-        shutil.copy2(
-            "./modified_modules/__init__.py",
-            "./venv/Lib/site-packages/reportlab/graphics/barcode/__init__.py",
-        )
-        shutil.copy2(
-            "./modified_modules/ecc200datamatrix.py",
-            "./venv/Lib/site-packages/reportlab/graphics/barcode/ecc200datamatrix.py",
-        )
-    except:  # noqa
-        python = sys.version_info
-        python = ".".join([str(python.major), str(python.minor)])
-        shutil.copy2(
-            "modified_modules/__init__.py",
-            f"./venv/lib/python{python}/site-packages/reportlab/graphics/barcode/__init__.py",
-        )
-        shutil.copy2(
-            "./modified_modules/ecc200datamatrix.py",
-            f"./venv/lib/python{python}/site-packages/reportlab/graphics/barcode/ecc200datamatrix.py",
-        )

@@ -1,4 +1,4 @@
-number_of_files = 10
+number_of_files = 16
 create_png = True
 pdf_created_dir = r'./examples/hello_world/pdf_created'
 first_number = 1

@@ -1,4 +1,4 @@
-working_directory = r"./examples/hello_world"
+working_directory = r"./examples/hello_world_2"
 
 # sla_in_dir = r""
 # sla_created_dir = r""

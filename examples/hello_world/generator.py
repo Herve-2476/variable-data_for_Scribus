@@ -12,7 +12,8 @@ sla = SLA(sys.argv)  # mandatory
 
 # ///////////////\\\\\\\\\\\\\\
 # write here the code that should not be repeated at each file creation
-
+sla.display_named_sla_objects()
+sla.display_sla_colors()
 colors = ["Magenta", "Cyan", "Red", "Yellow"]
 
 # \\\\\\\\\\\\\\\//////////////

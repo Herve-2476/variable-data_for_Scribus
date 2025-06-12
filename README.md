@@ -1,14 +1,14 @@
-The aim of this project is to create Pdf files or variable images. The programming language is Python, and the professional-quality files (with spot color and overprint management) are generated using Scribus. Once the files have been generated, we'll use the free online variable-data application (https://variable-data.graphics) to generate a Pdf file ready for printing.
+The aim of this project is to create Pdf files or variable images. The programming language is Python, and the professional-quality files (with spot color and overprint management) are generated using Scribus. Once the files have been generated, we'll use the online VariableData application (https://variable-data.graphics) to generate a Pdf file ready for printing.
 
 Tested with win11 and ubuntu 22.04.1 LTS
 
 # Clone of the repository
 
-- git clone https://github.com/Herve-2476/Variable_Data_Printing.git
+- git clone https://github.com/Herve-2476/variable-data_for_Scribus.git
 
-- cd Variable_Data_Printing
+- cd variable-data_for_Scribus
 
-# Creation of the virtual environment (Python 3.10)
+# Creation of the virtual environment (Python 3.13)
 
 - python -m venv venv # or _python3 -m venv venv_
 
@@ -22,11 +22,11 @@ Tested with win11 and ubuntu 22.04.1 LTS
 
 # Installation of Scribus
 
-You can download Scribus here : https://www.scribus.net/downloads/unstable-branch/
+You can download Scribus here : https://www.scribus.net/downloads/
 
-The examples were created with the version 1.5.8.  
+The examples were created with the version 1.6.4.  
 After installation, for windows users only, you must define the path of the Scribus executable in the `constants.py` file in `./utils/`.
-By default we have `SCRIBUS_EXE = ["C:/Program Files/Scribus 1.5.8",]` but if you have installed Scribus 1.5.3 in Program Files you need to change it with `SCRIBUS_EXE = ["C:/Program Files/Scribus 1.5.3","C:/Program Files/Scribus 1.5.8",]`
+By default we have `SCRIBUS_EXE = ["C:/Program Files/Scribus 1.6.4",]` but if you have installed Scribus 1.5.3 in Program Files you need to change it with `SCRIBUS_EXE = ["C:/Program Files/Scribus 1.5.3","C:/Program Files/Scribus 1.6.4",]`
 
 You can verify your installation (virtual environment + required libraries + Scribus + possibly the modification of `SCRIBUS_EXE`) by running pytest (just type the pytest command in your terminal).
 
@@ -34,9 +34,7 @@ You can verify your installation (virtual environment + required libraries + Scr
 pytest
 ```
 
-Four tests must passed.
-
-Note : If you are not interested with the generation of unit files with Scribus you can skip the part One and you don't have to install Scribus, however as we shall see in the part Two, Scribus can help you with complex impositions.
+Three tests must passed.
 
 # Part One : GENERATION OF UNIT FILES
 
@@ -53,7 +51,7 @@ python run_unitary.py
 So in the two previous cases you will running the hello_world project with the previous command.  
 Before you start your first project, the best way to understand how the program works is to run the following examples (in order) and read the explanations.
 
-Note : When you'll run the following 'hello_world' examples, the unitary files created will be in the `pdf_created` sub-directory and you'll find the imposed file in the `imposition` sub-directory.
+Note : When you'll run the following 'hello_world' examples, the unitary files created will be in the `pdf_created` sub-directory.
 
 # Running hello_world
 
@@ -164,9 +162,7 @@ sla.place("Document-5_stars") # places the object stars of the file Document-5.s
 
 In this example the object `stars` and the object `earth` are groups of objects. The first one is placed without change. With the second and with a for loop we can change the attributes of the objects that are in the group without knowing the name of each object.
 
-Note 1 : The objects in the group object `earth` are not filled with one color but with gradient, that's why we use the tag `CSTOP` and the attribute `NAME to modify it. (see how the sla file is constructed)
-
-Note 2 : There are additional elements on the imposed file, it is because this example is also used to explain the imposition part which will be seen just below. In the meantime to have the normal imposition you can just rename the file `settings_imposition.py` in the working directory to old (don't delete it) and run again the command `python run_unitary.py`.
+Note : The objects in the group object `earth` are not filled with one color but with gradient, that's why we use the tag `CSTOP` and the attribute `NAME` to modify it. (see how the sla file is constructed)
 
 # Creation of a project
 
@@ -186,7 +182,7 @@ The command above will create all directories and files needed for the project (
 - the directory `path_of_the_project/png_created` # created only if create_png=True (False by default)
 - the directory `path_of_the_project/pdf_created`
 - the file generator.py in the directory `path_of_the_project`# it's a copy of the generator_init.py file in ./unitary
-- the file settings_unitary.py in the directory `path_of_the_project` # it's a copy the app_settings.py file with mandatory options for imposition
+- the file settings_unitary.py in the directory `path_of_the_project` # it's a copy of the app_settings.py file with mandatory options for imposition
 
 You can change these directories by settings the variables `sla_in_dir`, `sla_created_dir`, `pdf_created_dir`, `png_created_dir` in the `app_settings.py` file.
 After running the previous command you will raise the exception `Exception: There is no sla files to treat in the directory path_of_the_project\sla_in` because there is no sla file in the directory `sla_in`. Open Scribus, create a sla file, put it in the directory `sla_in`, fill the `generator.py` file and run the project.
@@ -202,7 +198,7 @@ working_directory = r"path_of_the_project" # in the app_settings.py file
 python run_unitary.py
 ```
 
-To run a project we only need to set the `working_directory` in the `app_settings.py` file. All the others settings should be in the `settings_unitary.py` file in the working directory (unles you want to change the default directories).
+To run a project we only need to set the `working_directory` in the `app_settings.py` file. All the others settings should be in the `settings_unitary.py` file in the working directory (unless you want to change the default directories).
 The previous command can take three arguments that you can set in the `settings_unitary.py` file but these arguments overwrite those of the `settings_unitary.py` file.
 
 ```bash
@@ -221,7 +217,7 @@ This command will create 10000 files with 4 instances python to create sla files
 python run_unitary.py 10000 8
 ```
 
-This command will create 10000 files with 8 instances python to create sla files and each instance python will launch 1 instance ( if number_of_export_instances is not set in settings.py file with another value ) to export the sla files. Normally it's better because the eight cores of the machine are always in use( 8 for generate sla files and 8 for export). In some cases you will have to launch only one instance Python ( if you control the unicity of each file for example ), thus you will be able to launch the command :
+This command will create 10000 files with 8 instances python to create sla files and each instance python will launch 1 instance ( if number_of_export_instances is not set in settings.py file with another value ) to export the sla files. Normally it's better because the eight cores of the machine are always in use( 8 for generate sla files and 8 for export). In some cases you will have to launch only one instance Python ( if you want to control the unicity of each file for example ), thus you will be able to launch the command :
 
 ```bash
 python run_unitary.py 10000 1 8
@@ -235,7 +231,7 @@ Of course these settings depend on the number of file you want to create and if 
 
 Syntax : `object_SLA.display_named_sla_objects()`
 
-- This method display the name of all named objects found in the sla source files. Be careful in Scribus all the objects have generic names (like Text1, Polyline5, etc..) but these names are not in the sla file. You must name in Scribus the objects you want to place on your files.
+- This method display the name of all named objects found in the sla source files. Be careful in Scribus all the objects have generic names (like Text1, Polyline5, etc..) but these names are not in the sla file. You must rename in Scribus the objects you want to place on your files.
 
 ## - display_sla_colors()
 
@@ -247,10 +243,10 @@ Syntax : `object_SLA.display_sla_colors()`
 
 Syntax : `object_SLA.place(element,attribute=attribute_value,tag=[{attribute_name_of_tag:attribute_value,},],)`
 
-- place the element on the generated file
-- element : the object name or the object itself
-- attribute : it's an attribute of the tag PAGEOBJECT
-- tag : it's a child tag of PAGEOBJECT tag. The value is a list of dictionnary because we can have the same tag several times
+- place the element on the generated file.
+- element : the object name or the object itself.
+- attribute : it's an attribute of the tag PAGEOBJECT.
+- tag : it's a child tag of PAGEOBJECT tag. The value is a list of dictionnary (see how the sla file is built).
 
 ## - get()
 
@@ -261,335 +257,44 @@ Syntax : `object_SLA.get(element,attribute,default_value)`
 - attribute : it's an attribute of the tag `PAGEOBJECT`
 - default_value : value returned if the attribute is not found (0 by default)
 
-# Part Two : GENERATION OF AN IMPOSITION
-
-# Generate your first imposition
-
-# Running hello_world
-
-To generate an imposition you must define a working directory in the `app_settings.py` file in the `./hot_folder` directory with for example the line : `working_directory = r"./examples/hello_world"`.
-By default if the file app_settings is not present in the `./hot_folder` directory, the program will create it with the line above.  
-The command to generate an imposition is :
-
-```bash
-python run_imposition.py
-```
-
-The imposed file is in the `imposition` sub-directory. If you didn't run the `hello_world` example of the first part you will generate an error because you need unit files to generate an imposition. If your installation is complete, you can execute the command `python run_unitary.py` which will automatically generate the unit files and the imposition. Then you can use the command `python run_imposition.py` to only generate the imposition. If you don't have installed Scribus you can't use this example but it's important to understand how it works.
-When you create a project with Scribus with the command `python run_unitary.py`, the program create the `settings_unitary.py` file and the `settings_imposition.py` file. The program of imposition retrieves in the first file the number of files to impose with the first number and the pdf_created_dir to know where are the files to be imposed. Let's take a look at the second file.
-
-```py
-content = "Pdf_file_1"
-__Pdf_file_1 = {
-    "path": 'os.path.join(settings.pdf_source_dir, f"{number_file+settings.first_number-1}.pdf")',
-    "transformation": "0",
-}
-```
-
-The content data indicates the object in each window of the imposition. To understand what is a window, we must first define the sheet and the page. Sheet and page dimensions are set in the `default_settings.py` file in the `./imposition` directory. All these parameters can be redefined in the `settings_imposition.py` file. The sheet is the paper area and the page is the printing area. The number of windows on the page is calculated with the trimmed dimensions of the first pdf file (`1.pdf` in this case). The trimmed dimensions of the file are calculated with the parameter `file_bleed`. The file dimensions are retrieved automatically.
-
-The details of the pdf objects are defined with the data `__Pdf_file_1`.
-
-- `"path"` defined the files to put in the windows. The value of `settings.pdf_source_dir` is here the value of `pdf_created_dir` retrieved in the `settings_unitary.py` file (as `first_number`).`number_of_files` is an automatic variable that is incremented by one for each iteration.
-- `"transformation"` defined the position of the pdf file in the window.
-  - `"0"` = the file is centered without rotation.
-  - `"45"` = the file is centered with a rotation of 45 degrees.
-  - `(5,5,30)` = The origin is left bottom corner of the window. The file is offset by 5 mm in x and y and rotated of 30 degrees.
-
-Note : In a similar way you can define the position of the page on the sheet with the parameter `page_transformation`
-
-# Create an automatic imposition
-
-We will create a project of imposition in the directory `./examples/my_imposition`. To do that, just set the file `app_settings.py` in the `hot_folder` directory with this path and run the command :
-
-```bash
-python run_imposition.py
-```
-
-This command creates the directory `./examples/my_imposition`, the sub-directories `/imposition` and `/pdf_source` and the file `settings_imposition.py`. The directory `pdf_source` can be changed with the parameter `pdf_source_dir`. The program raise an error after the execution of the command because there is no file to impose. So just put some files in the source directory and run again the imposition. You can copy some files from the directories `hello_world`, `hello_world_1` and `hello_world_2`. You can have some files of different dimensions but remember, the number and the dimensions of windows on the page is calculated with the trimmed dimensions of the first pdf file.
-
-Example: file dimensions = 105.0 mm x 75.0 mm with file_bleed = 10 mm so we have trimmed size retained = 85.0 mm x 55.0 mm
-
-The dimensions of the windows are calculated with `space_cut_in_width` and `space_cut_in_height` parameters. In our examples, if we have `space_cut_in_width` = 4 mm and `space_cut_in_height` = 4 mm so we have windows dimensions = 89.0 mm x 59.0 mm.
-
-The parameters `bleed_in_width` and `bleed_in_height` are only used if we have simple cut (`space_cut_in_width`= 0 and/or `space_cut_in_height` = 0).
-
-The `Number of poses retained` is calculated automatically with cut dimensions, space cut dimensions, bleed dimensions and band marks dimensions. You can set them with the both parameters `poses_number_in_sheet_width` and `poses_number_in_sheet_height`.
-
-By default there are crop marks on the imposition. You can delete them if you delete the parameter `marks` in the `settings_imposition.py` file or if you set it to `()`. You can move the marks with the `offset_crop_mark` parameter (offset to the Cut).
-
-The poses of the imposition can be rotated with the parameter `poses_rotation`. The value must be in the list : `[0,90,-90,180]` (in degrees). (we will see below that in manually mode that the rotation of each pose can be set with any value)
-
-Let's take a look at the `settings_imposition.py` file.
-
-```py
-marks = "Pdf_file_2"
-content = ("Pdf_file_1",)
-__Pdf_file_1 = {
-    "path": "os.path.join(settings.pdf_source_dir, settings.files_list[number_file-1])",
-    "transformation": "0",
-}
-__Pdf_file_2 = {
-    "path": 'os.path.join(settings.working_directory, "fixed_marks.pdf")',
-    "transformation": "0",
-}
-```
-
-In the parameter `marks` we have only one pdf object, the file `fixed_marks.pdf` which is automatically created by the program.
-
-In the parameter `content` we have only one pdf object that points the files of `pdf_source_dir` directory.
-
-We can define the imposition more precisely. For example if you want to repeat the same file (the first of directory in this case) you can change the following lines.
-
-```py
-content = {"*": ("Pdf_file_1", 12)}
-__Pdf_file_1 = {
-    "path": "os.path.join(settings.pdf_source_dir, settings.files_list[0])",
-    "transformation": "0",
-}
-
-```
-
-In my example I have 4 poses in a row and 3 poses in a column. You can replace for the same result `settings.files_list[0]` by the real name of the file (`"path": "os.path.join(settings.pdf_source_dir, 'file_name.pdf')"`).
-
-If you have 3 files to impose you can change the following lines.
-
-```py
-content = {
-    "1-4": ("Pdf_file_1", 4),
-    "5,9": ("Pdf_file_3", 2),
-    "6-8,10-12": ("Pdf_file_4", 6),
-}
-__Pdf_file_1 = {
-    "path": "os.path.join(settings.pdf_source_dir, settings.files_list[0])",
-    "transformation": "0",
-}
-__Pdf_file_3 = {
-    "path": "os.path.join(settings.pdf_source_dir, settings.files_list[1])",
-    "transformation": "0",
-}
-__Pdf_file_4 = {
-    "path": "os.path.join(settings.pdf_source_dir, settings.files_list[2])",
-    "transformation": "0",
-}
-
-```
-
-The directions for identifying poses are from right to left and from top to bottom.
+# Part Two : GENERATION OF A PDF FILE WITH ALL UNIT FILES (IMPOSED FILE)
 
 # Running hello_world_2
 
-Set the `app_settings.py` file to `./examples/hello_world_2` and run the command `run_imposition.py`.
-Don't forget to use the good `settings_imposition` file if you changed it when you have run the command `run_unitary.py`.
-We see in this example that we can add variable objects when imposing(pdf file, text, qrcode etc..). In fact if we have some fixed files it's much faster than using Scribus. Let's take a look at the `settings_imposition.py` file.
+in the `app_settings.py` file in the `./hot_folder` :
 
 ```py
-import os
-
-marks = ("Pdf_file_2", "QR_image_2", "Text_2")
-content = ("Pdf_file_1", "QR_image_1", "Text_1")
-fonts = {
-    "DIN-Regular": os.path.abspath("./examples/hello_world_2/DIN-Regular.ttf"),
-}
-__Pdf_file_1 = {
-    "path": 'os.path.join(settings.pdf_source_dir, f"{number_file}.pdf")',
-    "transformation": "0",
-}
-__QR_image_1 = {
-    "value": 'f"hello {number_file:04}"',
-    "x": 73,
-    "y": 2,
-    "w": 10,
-    "h": 10,
-}
-__Text_1 = {
-    "value": 'f"N° {number_file:04}"',
-    "x": 83,
-    "y": 30,
-    "alpha": 90,
-    "font": "DIN-Regular",
-    "font_size": 15,
-    "color_font": "CMYKColorSep(0.09, 0.22, 0.65, 0.02, 'IFOIL')",
-    "center": 0,
-    "overprint": 0,
-}
-__Pdf_file_2 = {
-    "path": 'os.path.join(settings.working_directory, "fixed_marks.pdf")',
-    "transformation": "0",
-}
-__QR_image_2 = {
-    "value": 'f"{number_page:06}"',
-    "x": 2,
-    "y": 2,
-    "w": 10,
-    "h": 10,
-}
-
-__Text_2 = {
-    "value": 'f"Page N° {number_page:06}"',
-    "x": 12,
-    "y": 20,
-    "alpha": 90,
-    "font": "Helvetica",
-    "font_size": 9,
-    "color_font": "CMYKColor(0, 1, 0, 0)",
-}
+working_directory = r"./examples/hello_world_2"
 ```
 
-We are still in an automatic imposition so the file `fixed_marks.pdf` in the marks parameter is automatically generated by the program. We have two new objects in the marks parameter, a qrcode object and a text object. Like the `number_file` variable you can adress the page with the variable `number_page`. The objects are positionned on the page (not on the sheet) with the origin at the bottom left. Units are millimeter, degrees and points (font). `Helvetica` is a font recognized by ReportLab, so we can use it directly.
+We will create 16 files so we run :
 
-In the content parameter we have also two more objects. These objects are positionned on the pose with the origin at the bottom left of the cut (before the possible rotation of the pose). `DIN-Regular` is not a font recognized by ReportLab, so we have to define it. We do that with the paramater fonts (only ttf fonts).
-
-Note 1 : The spot color can take a last argument : the density between 0 and 1
-
-Note 2 : Reportlab recognizes colors like 'white', 'green', 'black' etc...
-
-Note 3 : In the object text the parameters `center` and `overprint` are by default set to 0.
-
-# Running hello_world_3
-
-Set the `app_settings.py` file to `./examples/hello_world_3` and run the command `run_imposition.py`.
-In this example we make an manual imposition, i.e we give a template to define the fixed marks and the position and the orientation of the poses. The template is a Scribus file. Open the `template.sla` with Scribus in the working directory to see how it should be structured.
-
-There are two layers. The `Marks` layer is to define the fixed marks of the imposition. The `Imposition` layer is to define the position and the orientation of the poses. Each pose must be name `window_n` with n between 1 and the total number of the poses. The number `n` is the number that we find in the content definition in the `settings_imposition.py` file. In Scribus you need the windows `Properties` (F2), `Outline` and `Layers` (F6) to work easily.
-When you run the command `run_imposition.py` the program export the layer `Marks` in the `fixed_marks.pdf` file and retrieve the position and the orientation of all the poses of the `Imposition` layer.
-
-Let's take a look at the `settings_imposition.py` file.
-
-```py
-marks = ("Pdf_file_4", "QR_image_4", "Text_5", "CSV_2,1", "number,4,-1")
-content = {
-    "1-2,5": ("Pdf_file_1", "Text_1", "QR_image_1", "CSV_1,10", 9),
-    "3-4,6": ("Pdf_file_2", "Pdf_file_5", "Text_1", "QR_image_1", "CSV_1,19", 9),
-    "7-9": (
-        "Pdf_file_3",
-        "QR_image_2",
-        "QR_image_3",
-        "Text_2",
-        "Text_3",
-        "Text_4",
-        "CSV_1,1",
-        "CSV_2,9",
-        "number,9,-1",
-        9,
-    ),
-}
-
-
-__QR_image_4 = {
-    "value": 'f"{number_page:06}"',
-    "x": 0,
-    "y": 0,
-    "w": 10,
-    "h": 10,
-}
-
-__Text_5 = {
-    "value": 'f"Page N° {number_page:04}--{CSV_2_column_1}--Page N° {number:04} en décroissant"',
-    "x": 10,
-    "y": 20,
-    "alpha": 90,
-    "font": "Helvetica",
-    "font_size": 9,
-    "color_font": "black",
-}
-
-
-__QR_image_1 = {
-    "value": "CSV_1_column_1",
-    "x": 73,
-    "y": 2,
-    "w": 10,
-    "h": 10,
-}
-__QR_image_2 = {
-    "value": "CSV_1_column_1",
-    "x": 15,
-    "y": 85,
-    "w": 10,
-    "h": 10,
-}
-__QR_image_3 = {
-    "value": "CSV_2_column_1",
-    "x": 99,
-    "y": 11,
-    "w": 10,
-    "h": 10,
-}
-__CSV_1 = {
-    "path": 'os.path.abspath(r"./examples/hello_world_3/data1.csv")',
-    "sep": ",",
-}
-__CSV_2 = {
-    "path": 'os.path.abspath(r"./examples/hello_world_3/data2.csv")',
-    "sep": ",",
-}
-__Pdf_file_1 = {
-    "path": 'os.path.join(r"./examples/hello_world_2/pdf_created_source", f"{number_file}.pdf")',
-    "transformation": "0",
-}
-__Pdf_file_2 = {
-    "path": 'os.path.join(r"./examples/hello_world_1/pdf_created_source", f"{number_file}.pdf")',
-    "transformation": "0",
-}
-__Pdf_file_3 = {
-    "path": 'os.path.join(settings.working_directory, "pdf_source","collerette.pdf")',
-    "transformation": "0",
-}
-__Pdf_file_4 = {
-    "path": 'os.path.join(settings.working_directory, "fixed_marks.pdf")',
-    "transformation": "0",
-}
-__Pdf_file_5 = {
-    "path": 'os.path.join(settings.working_directory, "pdf_source","background.pdf")',
-    "transformation": "0",
-}
-__Text_1 = {
-    "value": "CSV_1_column_2",
-    "x": 83,
-    "y": 15,
-    "alpha": 90,
-    "font": "Helvetica",
-    "font_size": 12,
-    "color_font": "white",
-}
-__Text_2 = {
-    "value": 'f"Collerette N° {number:04}"',
-    "x": 34,
-    "y": 76,
-    "alpha": -33,
-    "font": "Helvetica",
-    "font_size": 12,
-    "color_font": "white",
-}
-__Text_3 = {
-    "value": "CSV_1_column_2",
-    "x": 23,
-    "y": 103,
-    "alpha": -55,
-    "font": "Helvetica",
-    "font_size": 9,
-    "color_font": "white",
-}
-__Text_4 = {
-    "value": "CSV_2_column_2",
-    "x": 92,
-    "y": 17,
-    "alpha": 45,
-    "font": "Helvetica",
-    "font_size": 9,
-    "color_font": "white",
-}
+```bash
+python run_unitary.py 16
 ```
 
-In the `marks` parameter we have two new objects. `"CSV_2,1"` means that we use the csv file defined in the `__CSV_2` object and in this file we begin to read the first record. We can use the value of this csv file in all the objects of `marks` or `content` with the variables `"CSV_2_column_1"` and `"CSV_2_column_2"`. `"number,4,-1"` means that we create a variable `number` that will take the value 4 for the first page, 3 for the second page etc... We can use this variable in all the objects of `marks`.
+Now, we'll use the online VariableData application (https://variable-data.graphics).
 
-# Speed of imposition
+Click on the `Get started without account` button.
 
-To accelerate the imposition we use two parameters, `number_of_imposition_instances` and `final_number_of_files`.
-Today a lot of machines have 4 cores so you can always set the first parameter to 4 (and more if your machine is stronger).
-But if you create 4 instances you have to merge 4 files to have a `final_number_of_files` of 1 and the merger takes a little time. So for a small imposition set `final_number_of_files` to one but if the final file is big don't hesitate to increase the `final_number_of_files` especially since professionnal printing machines can handle easily multiple files and often are limited with the size of each file (to rip the file).
+For the following actions, use the application image below.
 
-# Compliance with PEP 8 guidelines
+Add a reference in the `REFERENCES` area with the `+` button.
 
-- flake8
+In the `quantity` field, enter `16`.
+
+Drag and drop the 16 Pdf files from the directory `./examples/hello_world_2/pdf_created` in the `Upload object files` area.
+
+Add a Pdf object with the button `Add object`.
+
+Click on the `no variable`field and select `number:01` and enter `.pdf` in the field just after.
+
+Check that your entry is correct with the following image.
+
+If ok, click on the button `Create`.
+
+The application generates the pdf file and displays the first page.
+If you like, you can download the 4-page pdf file by clicking on the button `PDF/CSV n°1/1`.
+
+When you quit the application or click on the reset button, all files downloaded and created on the server are deleted.
+If you just want to put variable text on a Pdf file or an image, the VariableData application can do this directly (using an Excel or Csv data file) and more quickly than creating unit files, but for more complex data such as color gradients, Scribus is a must.
