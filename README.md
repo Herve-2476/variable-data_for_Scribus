@@ -1,4 +1,4 @@
-The aim of this project is to create Pdf files or images with variable data. The programming language is Python, and the professional-quality files (with spot color and overprint management) are generated using Scribus. Once the files have been generated, we'll use the online VariableData application (https://variable-data.graphics) to generate a Pdf file ready for printing.
+The aim of this project is to use Scribus to create Pdf files or images with variable data. Once the files have been generated, we'll use the online VariableData application (https://variable-data.graphics) to generate a Pdf file ready for printing.
 
 Tested with win11 and ubuntu 22.04.1 LTS
 
